@@ -6,6 +6,7 @@ import CircleButton from "../CircleButton/CircleButton";
 import APIContext from "../APIContext";
 import { getNotesForFolder } from "../notes-helpers";
 import "./NoteListMain.css";
+import PropTypes from "prop-types";
 
 export default class NoteListMain extends Component {
   static defaultProps = {
@@ -46,3 +47,7 @@ export default class NoteListMain extends Component {
     );
   }
 }
+
+NoteListMain.propTypes = {
+  match: PropTypes.object,
+};

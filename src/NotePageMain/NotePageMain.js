@@ -3,6 +3,7 @@ import APIContext from "../APIContext";
 import { findNote } from "../notes-helpers";
 import Note from "../Note/Note";
 import "./NotePageMain.css";
+import PropTypes from "prop-types";
 
 export default class NotePageMain extends Component {
   static defaultProps = {
@@ -14,10 +15,10 @@ export default class NotePageMain extends Component {
   static contextType = APIContext;
 
   handleDeleteNote = (noteId) => {
-    this.props.history.push(`/`);
+    this.props.history.push("/");
   };
 
-  return() {
+  render() {
     const { notes = [] } = this.context;
     const { noteId } = this.props.match.params;
     const note = findNote(notes, noteId) || { content: "" };
@@ -38,3 +39,8 @@ export default class NotePageMain extends Component {
     );
   }
 }
+
+NotePageMain.propTypes = {
+  history: PropTypes.object,
+  match: PropTypes.object,
+};

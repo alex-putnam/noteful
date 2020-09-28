@@ -1,17 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { format } from "date-fns";
-import { parseISO } from "date-fns";
+//import { format } from "date-fns";
+//import { parseISO } from "date-fns";
 import APIContext from "../APIContext";
 import config from "../config";
+import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Note.css";
 
 export default class Note extends React.Component {
-  static defaultProps = {
-    onDeletenote: () => {},
-  };
-
   static contextType = APIContext;
 
   handleClickDelete = (e) => {
@@ -30,7 +27,9 @@ export default class Note extends React.Component {
       })
       .then(() => {
         this.context.deleteNote(noteId);
-        this.props.onDeleteNote(noteId);
+        if (this.props.onDeleteNote) {
+          this.props.onDeleteNote(noteId);
+        }
       })
       .catch((error) => {
         console.error({ error });
@@ -53,13 +52,16 @@ export default class Note extends React.Component {
         </button>
         <div className="Note__dates">
           <div className="Note__dates-modified">
-            Modified{" "}
-            <span className="Date">
-              {format(parseISO(modified), "MMM d yyyy")}
-            </span>
+            Modified <span className="Date">{modified}</span>
           </div>
         </div>
       </div>
     );
   }
 }
+
+Note.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  modified: PropTypes.string,
+};

@@ -4,6 +4,7 @@ import CircleButton from "../CircleButton/CircleButton";
 import "./NotePageNav.css";
 import APIContext from "../APIContext";
 import { findNote, findFolder } from "../notes-helpers";
+import PropTypes from "prop-types";
 
 export default class NotePageNav extends Component {
   static defaultProps = {
@@ -39,3 +40,8 @@ export default class NotePageNav extends Component {
     );
   }
 }
+
+NotePageNav.propTypes = {
+  history: PropTypes.object,
+  match: PropTypes.object,
+};
