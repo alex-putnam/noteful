@@ -49,5 +49,5 @@ export default class NoteListMain extends Component {
 }
 
 NoteListMain.propTypes = {
-  match: PropTypes.object,
+  match: PropTypes.object.isRequired,
 };

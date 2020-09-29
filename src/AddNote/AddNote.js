@@ -27,6 +27,13 @@ export default class AddNote extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    if (this.validateName()) {
+      this.setState({
+        name: { touched: true },
+      });
+      return;
+    }
+
     const newNote = {
       name: e.target["note-name"].value,
       content: e.target["note-content"].value,
@@ -59,8 +66,7 @@ export default class AddNote extends Component {
   }
 
   validateName() {
-    const name = this.state.name.value.trim();
-    if (name.length === 0) {
+    if (!this.state.name.value) {
       return "Name is required";
     }
   }
@@ -71,7 +77,7 @@ export default class AddNote extends Component {
     return (
       <section className="AddNote">
         <h2>Create a note</h2>
-        <NotefulForm onSubmit={this.handleSubmit}>
+        <NotefulForm onSubmit={(e) => this.handleSubmit(e)}>
           <div className="field">
             <label htmlFor="note-name-input">Name</label>
             <input
@@ -79,7 +85,6 @@ export default class AddNote extends Component {
               id="note-name-input"
               name="note-name"
               onChange={(e) => this.handleName(e.target.value)}
-              required
             />
             {this.state.name.touched && <ValidationError message={nameError} />}
           </div>
