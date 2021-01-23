@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import NoteListNav from "../NoteListNav/NoteListNav";
-import NotePageNav from "../NotePageNav/NotePageNav";
-import NoteListMain from "../NoteListMain/NoteListMain";
-import NotePageMain from "../NotePageMain/NotePageMain";
-import AddFolder from "../AddFolder/AddFolder";
-import AddNote from "../AddNote/AddNote";
-import APIContext from "../APIContext";
-import config from "../config";
-import NotefulError from "../NotefulError";
-import "./App.css";
+import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NoteListNav from '../NoteListNav/NoteListNav';
+import NotePageNav from '../NotePageNav/NotePageNav';
+import NoteListMain from '../NoteListMain/NoteListMain';
+import NotePageMain from '../NotePageMain/NotePageMain';
+import AddFolder from '../AddFolder/AddFolder';
+import AddNote from '../AddNote/AddNote';
+import APIContext from '../APIContext';
+import config from '../config';
+import NotefulError from '../NotefulError';
+import './App.css';
 
 class App extends Component {
   state = {
@@ -55,15 +55,21 @@ class App extends Component {
     });
   };
 
+  handleDeleteFolder = (folderId) => {
+    this.setState({
+      notes: this.state.folders.filter((folder) => folder.id !== folderId),
+    });
+  };
+
   renderNavRoutes() {
     return (
       <>
-        {["/", "/folder/:folderId"].map((path) => (
+        {['/', '/folder/:folderId'].map((path) => (
           <Route exact key={path} path={path} component={NoteListNav} />
         ))}
-        <Route path="/note/:noteId" component={NotePageNav} />
-        <Route path="/add-folder" component={NotePageNav} />
-        <Route path="/add-note" component={NotePageNav} />
+        <Route path='/note/:noteId' component={NotePageNav} />
+        <Route path='/add-folder' component={NotePageNav} />
+        <Route path='/add-note' component={NotePageNav} />
       </>
     );
   }
@@ -71,12 +77,12 @@ class App extends Component {
   renderMainRoutes() {
     return (
       <>
-        {["/", "/folder/:folderId"].map((path) => (
+        {['/', '/folder/:folderId'].map((path) => (
           <Route exact key={path} path={path} component={NoteListMain} />
         ))}
-        <Route path="/note/:noteId" component={NotePageMain} />
-        <Route path="/add-folder" component={AddFolder} />
-        <Route path="/add-note" component={AddNote} />
+        <Route path='/note/:noteId' component={NotePageMain} />
+        <Route path='/add-folder' component={AddFolder} />
+        <Route path='/add-note' component={AddNote} />
       </>
     );
   }
@@ -88,19 +94,20 @@ class App extends Component {
       addFolder: this.handleAddFolder,
       addNote: this.handleAddNote,
       deleteNote: this.handleDeleteNote,
+      deleteFolder: this.handleDeleteFolder,
     };
     return (
       <APIContext.Provider value={value}>
-        <div className="App">
+        <div className='App'>
           <NotefulError>
-            <nav className="App__nav">{this.renderNavRoutes()}</nav>
-            <header className="App__header">
+            <nav className='App__nav'>{this.renderNavRoutes()}</nav>
+            <header className='App__header'>
               <h1>
-                <Link to="/">Noteful</Link>{" "}
-                <FontAwesomeIcon icon="check-double" />
+                <Link to='/'>Noteful</Link>{' '}
+                <FontAwesomeIcon icon='check-double' />
               </h1>
             </header>
-            <main className="App__main">{this.renderMainRoutes()}</main>
+            <main className='App__main'>{this.renderMainRoutes()}</main>
           </NotefulError>
         </div>
       </APIContext.Provider>
